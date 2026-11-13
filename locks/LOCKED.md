@@ -557,3 +557,11 @@ These lines are baked into this repo's own pastes. They come from pre-run 17's l
 ## Locked during pre-run 18
 
 When a fix works, append it here, one block per fix, in the form shown above: UTC time, what failed or worked, what was changed, why that change stays.
+
+```
+- 2026-11-13T04:23:43Z.
+- What worked: the greedy duel (lane 1 target 110 percent of its reference, never down; lane 2 the normal rule; the cap guard; the symmetric repeat), key 0 sized on use with a budget check before genesis (85,031 usable, projected end 30,311, actual 41,339). Rehearsed offline first, calibrated at 100/450 (hops) and 100/2,000 (lane) on the node, bot free check once before arming. Every step, RETURN, TIMELINE, MEMPOOL and METHOD on origin, every whole minute kept pace. 23,211 lane transactions accepted, 0 rejected, 0 lost, 22,558.34 tKAS fees, 870.41 parked (not swept). Every OK family hop included (7,413 / 8,954 / 11,338 / 12,340). Duel: a leapfrog 150 -> 1,405 (lane 1) and 1,124 / 1,405 (lane 2) in 24 minutes, no cap; lane landings together steady (median 548 reference, 560-562 climbing); tiers at the top 0 / 0-1 / 5-8 / 12-18 percent of BASE; symmetric repeat 100/100 in about four minutes. Mini 251 of 252. Bot NO SEND no-free-node on time.
+- What failed: nothing in the run. The bot's box stalled about 171 s (heartbeat gap 03:50:13Z-03:53:04Z; one git fetch 161.8 s, rc 128); the waiter recovered on its next loop.
+- What was changed: nothing during the run. The duel log was copied unchanged to logs/duel.log after the run.
+- Why that change stays, for the next repo: keep the duel controller and its log, the greedy mode and the cap guard, pricing on the node's mass, the calibrations, the budget check before genesis, the pre-arm free check, Mini's count and the waiter's fetch handling. Key 0 used about 1.09 usable tKAS per OK hop; the pile is down to 796 coins after the lanes, so a longer climb needs a pile refill first.
+```

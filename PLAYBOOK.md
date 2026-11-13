@@ -72,11 +72,21 @@ Rehearsal `p18-a` ran on the desk against the fake node (no network for the send
 
 ## Status after the live run
 
-AFTER_PLACEHOLDER
+Read on 2026-11-13 between 04:18Z and 04:30Z. Not a gate.
+
+- **The run finished through RETURN.** The desk runner (started 03:07:40Z) ran BASE, HOLD-1 (both lanes' reference), HOLD-2 and HOLD-3 (the greedy duel, 24 minutes, then the 8-minute symmetric repeat), the drain, HOLD-4 and RETURN; every whole minute kept pace and was clean; no repair, no restart. `RUN_STOP return-closed` 04:18:24Z; TIMELINE, MEMPOOL and METHOD on origin 04:23:35–41Z; `RUN end` 04:23:43Z. No runner process was left on the desk. The private TN10 kaspad (2.1.0) was not stopped. No devnet, `KaspaPublicNode` or miner was started; `serve.mjs` and its keeper were not touched.
+- **The greedy duel climbed.** Lane 1 (greedy) 150 → 1,405 in about 21 minutes (10 steps up), lane 2 (normal rule) following each time it fell behind (14 up, 4 down) to 1,124, and 1,405 at the last decision; no cap. The two lanes together landed about the same every minute (median 548 at the reference, 560–562 in the climb), so the climb moved places between them rather than adding any. The symmetric repeat came back to 100 / 100 in about four minutes. Fixed tiers (percent of BASE, floor / r150 / r300 / r450): reference 43 / 68 / 96 / 104, second greedy part median 1 / 4 / 22 / 40, at 100 / 100 65 / 86 / 98 / 106, RETURN 101 / 99 / 99 / 102. The duel log is [logs/duel.log](logs/duel.log).
+- Our heavy lanes: `LANE_END` 04:18:25Z, 23,211 accepted (lane 1 12,346, lane 2 10,865), 0 rejected, 0 lost, 22,558.34 tKAS fees, 870.41 tKAS parked on our sink key (not swept), 1,169 pile coins taken, 0 pending.
+- Inclusion (counter totals): every OK hop (floor 7,413, r150 8,954, r300 11,338, r450 12,340) and every lane transaction (23,211) landed.
+- The outside heavy fee-100 stream of pre-runs 14–16 was absent (1 entry in four minutes, 0 otherwise). The probe's mempool read worked every sample (the mempool peaked at 6,374 entries).
+- Mini: the runner (MINI-ARMED 03:07:15Z) published every step, each read in full, and matched the desk in 251 of 252 cohort cells (r150 in the 03:54 minute: 130 against 131); 67 removals after a minute had closed over the run. Its TN10 kaspad was not wiped or restarted.
+- Bot: `NO SEND no-free-node` for the pinned minute 04:06Z (on origin 04:07:04Z, first try); nothing sent. Its box stalled once (heartbeat gap 03:50:13Z–03:53:04Z; one git fetch took 161.8 s and failed), and its waiter recovered on the next loop.
+- Keys after the run (read-only status): key 0 4,646 coins over 3 tKAS, 41,339 usable (abort line 18,000), 1,451 small coins; keys 1–15 have no genesis coin; payment pile 796 coins.
+- Results: [logs/LESSONS.md](logs/LESSONS.md), [logs/duel.log](logs/duel.log), and the pre-run 18 block in [locks/LOCKED.md](locks/LOCKED.md).
 
 ### Public statement
 
-We run our own two heavy lanes on TN10 in this pre-run, with the operator's OK, 30 chains each: 10 minutes both at 150, then 32 minutes at rates our duel rule sets between 100 and 2,000 sompi/gram, one of them greedy on purpose. While they run, other TN10 users' transactions paying up to about the lanes' rates wait longer on the nodes that see them, and more of them wait as the lanes climb. The figures for this run are added here after it. This is our own testing; tKAS has no value.
+We run our own two heavy lanes on TN10 in this pre-run, with the operator's OK, 30 chains each: 10 minutes both at 150, then 32 minutes at rates our duel rule sets between 100 and 2,000 sompi/gram, one of them greedy on purpose. While they run, other TN10 users' transactions paying up to about the lanes' rates wait longer on the nodes that see them, and more of them wait as the lanes climb. In this run the lanes ran 42 minutes: 10 at 150, 24 in the greedy duel (they climbed from 150 to 1,405), 8 in a symmetric repeat (back to 100). On our desk node other traffic landed a median of 2,992 a minute with the lanes at 150, 2,904 in the first 12 greedy minutes and 2,404 in the last 12 (single minutes from 425 to 7,764), against 3,132 with the lanes at 0 (BASE): about 5, 7 and 23 percent lower. In the last 12 greedy minutes the desk mempool grew to 6,374 entries and the node's priority fee estimate rose to 2,197 (median 1,370) instead of 144; part of the delayed traffic landed when the backlog cleared. Our own hops at 100, a stand-in for a low-fee user, ran at 43 percent of their BASE pace with the lanes at 150 and at 0–1 percent with the lanes at 1,124–1,405. No outside heavy stream was present. The lanes went to 0 at 04:01:59Z. This is our own testing; tKAS has no value.
 
 ## When something breaks
 
