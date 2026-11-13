@@ -62,7 +62,13 @@ Not a gate. Read on 2026-11-13 between 02:30Z and 02:40Z. This is our own TN10 t
 
 ## Offline rehearsal, recorded before `PRE-RUN-OPEN`
 
-REHEARSAL_PLACEHOLDER
+Rehearsal `p18-a` ran on the desk against the fake node (no network for the sends), 2026-11-13 02:42:33Z to 03:04:24Z, with 2-minute lane steps (`STORM_LANE_MIN=2`, `STORM_RET_MIN=2`) and the probe's full read capped at 5,000 entries, using this pre-run's runner, lane, counter, probe, kit24 and family-fee files (the same files, by hash, as the live run).
+
+- Preflight passed; `BUDGET_CHECK` logged (key 0 85,031 usable, 22 planned family minutes in the rehearsal, projected end 68,311, over the line plus margin); genesis 16 of 16 live; `FEE_SPLIT` verified floor 100, r150 150, r300 300, r450 450; `LANE_PLAN` BASE N0, HOLD-1 the reference, HOLD-2 greedy-1, HOLD-3 greedy-2 and the symmetric repeat, then the drain.
+- Both lanes submitted from one process with no rejections and no losses (10,602 OK in all); the counter split our landings into lane 1 and lane 2 (hv1, hv2).
+- The duel controller did what the plan says: the reference from HOLD-1; in the greedy part lane 1 stepped up every minute (150 → 188 → 235 → 294; the fake node lands both lanes the same, about 103 percent of the reference, under lane 1's 110 percent) while lane 2 stepped down (150 → 120); **the second greedy part continued from 188 without a reset**; the symmetric repeat started both at 150 and the minute that changed the rule held. No `ERROR` line; no cap in 2-minute steps.
+- Every step file, TIMELINE, MEMPOOL and METHOD published to the rehearsal's local origin; `RUNNER_EXIT 0`.
+- The cap guard for the greedy lane alone and the budget hold were not reached in the rehearsal; the cap guard ran in the offline controller test (`tools/sim/dueltest18.mjs`: `CAP_REACHED side=a`, then both back to 150).
 
 ## Status after the live run
 
